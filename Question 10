@@ -1,0 +1,5 @@
+fprintf('\n===== Q10 : Dispersion measures =====\n');
+A = [498 502 500 505 497 501 499 503 500 496 504];
+B = [480 520 505 490 515 500 485 525 510 495 530];
+dispReport('Machine A', A);
+dispReport('Machine B', B);
