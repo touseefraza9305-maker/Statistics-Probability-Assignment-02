@@ -1,0 +1,14 @@
+fprintf('\n===== Q1 : Errors of measurement =====\n');
+observed = 45.3;                 % recorded length (cm), nearest 0.1 cm
+trueVal  = 45.34;                % true length (cm)
+absErr   = trueVal - observed;   % absolute error
+relErr   = absErr / trueVal;     % relative error
+pctErr   = relErr * 100;         % percentage error
+fprintf('Absolute error   = %.2f cm\n', absErr);
+fprintf('Relative error   = %.6f\n', relErr);
+fprintf('Percentage error = %.4f %%\n', pctErr);
+fprintf('True length lies between %.2f and %.2f cm\n', observed-0.05, observed+0.05);
+
+% Repeated readings: random (unbiased) errors tend to cancel out
+readings = [45.1 45.3 45.2 45.4 45.3 45.2 45.4 45.3 45.2 45.3];
+fprintf('Mean of 10 repeated readings = %.2f cm\n', mean(readings));
