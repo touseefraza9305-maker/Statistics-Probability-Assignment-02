@@ -1,0 +1,10 @@
+fprintf('\n===== Q6 : Stem and leaf =====\n');
+d6 = [67 82 55 74 91 63 78 85 59 72 88 66 93 71 64 79 84 58 76 69 81 73 76 62 87 76];
+d6s = sort(d6);
+stems = floor(d6s/10);  leaves = mod(d6s,10);
+fprintf('Stem | Leaf\n');
+for st = min(stems):max(stems)
+    fprintf('  %d  | %s\n', st, sprintf('%d ', leaves(stems==st)));
+end
+fprintf('n = %d, median = %.1f, mode = %d\n', numel(d6), median(d6), mode(d6));
+fprintf('Students scoring 80 or more = %d\n', sum(d6 >= 80));
