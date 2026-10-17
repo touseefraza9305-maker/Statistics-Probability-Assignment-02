@@ -1,0 +1,15 @@
+fprintf('\n===== Q13 : Box plot and skewness =====\n');
+bills = [28 31 33 35 36 38 39 41 42 44 45 47 49 52 54 58 63 71 96];
+q1 = rawQuantile(bills,.25); q2 = rawQuantile(bills,.5); q3 = rawQuantile(bills,.75);
+x0 = min(bills); xm = max(bills);
+mu13 = mean(bills); sd13 = sqrt(mean((bills-mu13).^2));   % SD with divisor n
+skP  = 3*(mu13 - q2)/sd13;
+skB  = (q3 + q1 - 2*q2)/(q3 - q1);
+fprintf('X0=%g Q1=%g Median=%g Q3=%g Xm=%g\n', x0,q1,q2,q3,xm);
+fprintf('Mean = %.2f, SD = %.2f\n', mu13, sd13);
+fprintf('Pearson skewness = %.3f, Bowley skewness = %.3f\n', skP, skB);
+figure('Name','Q13'); hold on;
+rectangle('Position',[q1 0.8 q3-q1 0.4]);          % the box
+plot([q2 q2],[0.8 1.2],'k','LineWidth',2);           % median line
+plot([x0 q1],[1 1],'k'); plot([q3 xm],[1 1],'k');    % whiskers
+ylim([0 2]); xlabel('Monthly electricity bill (Rs hundred)'); title('Box-and-whisker plot'); hold off;
