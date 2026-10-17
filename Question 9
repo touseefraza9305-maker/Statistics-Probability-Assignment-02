@@ -1,0 +1,9 @@
+fprintf('\n===== Q9 : GM and HM =====\n');
+g  = [1.12 1.08 0.95 1.20 1.15];             % yearly growth factors
+GM = prod(g)^(1/numel(g));
+fprintf('Product = %.7f, GM = %.4f -> average growth = %.2f %%\n', prod(g), GM, (GM-1)*100);
+fprintf('Arithmetic mean of the rates = %.2f %%\n', mean((g-1)*100));
+sp  = [40 60 80 50];                           % speeds on equal legs (km/h)
+AM  = mean(sp);  GMs = prod(sp)^(1/4);  HM = numel(sp)/sum(1./sp);
+fprintf('AM = %.2f, GM = %.2f, HM = %.2f  (AM >= GM >= HM)\n', AM, GMs, HM);
+fprintf('Check: total distance/total time = %.2f km/h\n', 240/sum(60./sp));
