@@ -1,0 +1,14 @@
+fprintf('\n===== Q2 : Sampling error =====\n');
+pop = [14 18 22 26 30 38];            % daily orders of a bakery (N = 6)
+mu  = mean(pop);
+allSamples = nchoosek(pop, 3);        % every sample of size n = 3
+nSamples   = size(allSamples, 1);
+sampMeans  = mean(allSamples, 2);
+sampErr    = sampMeans - mu;
+fprintf('Population mean mu = %.4f\n', mu);
+fprintf('Number of possible samples = %d\n', nSamples);
+fprintf('Mean of all sample means   = %.4f  (equals mu)\n', mean(sampMeans));
+fprintf('Largest |sampling error|   = %.4f\n', max(abs(sampErr)));
+s = [14 26 38];
+fprintf('Sample {14,26,38}: mean = %.2f, sampling error = %.4f\n', mean(s), mean(s)-mu);
+disp(table_like(allSamples, sampMeans, sampErr));
