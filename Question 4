@@ -1,0 +1,27 @@
+fprintf('\n===== Q4 : Frequency distribution =====\n');
+x = [11.2 11.8 10.6 9.3 10.2 9.1 11.3 14.0 10.2 9.9 12.2 11.9 11.4 9.2 11.1 ...
+    12.7 8.4 10.2 7.2 8.5 7.3 10.7 8.5 11.8 11.5 10.8 6.5 10.1 11.1 11.4 ...
+    8.0 10.2 9.1 9.5 13.4 9.5 11.1 13.1 10.0 11.0];
+n = numel(x);
+R = max(x) - min(x);
+fprintf('n = %d, min = %.1f, max = %.1f, range = %.1f\n', n, min(x), max(x), R);
+k = 6;  h = 1.5;                       % 6 classes, class interval 1.5 (7.5/6 = 1.25 rounded up)
+lowLim = 6.5 + (0:k-1)*h;
+upLim  = lowLim + 1.4;
+lowB   = lowLim - 0.05;  upB = upLim + 0.05;
+mid    = (lowLim + upLim) / 2;
+freq   = zeros(1,k);
+for i = 1:k
+    freq(i) = sum(x >= lowLim(i)-1e-9 & x <= upLim(i)+1e-9);
+end
+relf = freq / n;
+fprintf('%-12s %-14s %-6s %-5s %-8s %-6s\n','Class','Boundaries','Mid','f','Rel.f','%');
+for i = 1:k
+    fprintf('%4.1f-%4.1f   %5.2f-%5.2f    %5.1f  %3d   %6.3f   %5.1f\n', ...
+        lowLim(i), upLim(i), lowB(i), upB(i), mid(i), freq(i), relf(i), relf(i)*100);
+end
+fprintf('Total f = %d\n', sum(freq));
+fprintf('Phones lasting at least 9.5 h: %d (%.1f %%)\n', sum(freq(3:end)), sum(freq(3:end))/n*100);
+figure('Name','Q4');
+bar(mid, freq, 1); xlabel('Battery life (hours)'); ylabel('Frequency');
+title('Histogram of battery life of 40 phones'); hold on; plot(mid, freq, 'r-o'); hold off;
