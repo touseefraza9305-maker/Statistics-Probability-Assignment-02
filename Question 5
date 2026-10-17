@@ -1,0 +1,21 @@
+fprintf('\n===== Q5 : Cumulative frequency / ogive =====\n');
+bnd  = [300 400 500 600 700 800 900];    % class boundaries (daily wage, Rs)
+f5   = [6 14 26 20 10 4];
+n5   = sum(f5);
+mid5 = (bnd(1:end-1) + bnd(2:end)) / 2;
+cf5  = cumsum(f5);
+fprintf('Mid-points : '); fprintf('%d ', mid5); fprintf('\n');
+fprintf('Less-than cumulative frequencies: '); fprintf('%d ', cf5); fprintf('\n');
+fprintf('Relative cumulative (%%): '); fprintf('%.1f ', cf5/n5*100); fprintf('\n');
+ogX = bnd;           ogY = [0 cf5];
+less650   = interp1(ogX, ogY, 650);
+between   = interp1(ogX, ogY, 750) - interp1(ogX, ogY, 450);
+w90       = interp1(ogY, ogX, 0.90*n5);
+fprintf('Workers earning less than Rs 650    = %.0f\n', less650);
+fprintf('Workers earning between 450 and 750 = %.0f\n', between);
+fprintf('Wage below which 90%% earn           = Rs %.0f\n', w90);
+figure('Name','Q5');
+subplot(1,2,1); plot([mid5(1)-100 mid5 mid5(end)+100], [0 f5 0], '-o');
+xlabel('Daily wage (Rs)'); ylabel('Workers'); title('Frequency polygon'); grid on;
+subplot(1,2,2); plot(ogX, ogY, '-s'); xlabel('Daily wage (Rs)'); ylabel('Cumulative frequency');
+title('Less-than ogive'); grid on;
