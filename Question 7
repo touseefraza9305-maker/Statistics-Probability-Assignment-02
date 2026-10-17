@@ -1,0 +1,8 @@
+fprintf('\n===== Q7 : Means and median =====\n');
+credit = [3 4 3 2 2];
+gp     = [3.67 3.33 2.67 4.00 3.00];
+GPA    = sum(credit.*gp) / sum(credit);
+fprintf('Sum(w*x) = %.2f, Sum(w) = %d, weighted mean (GPA) = %.2f\n', sum(credit.*gp), sum(credit), GPA);
+t = [32 28 45 38 25 52 30 41 35 29 60];
+fprintf('Delivery times: mean = %.2f, median = %.1f\n', mean(t), median(t));
+fprintf('Sorted: '); fprintf('%d ', sort(t)); fprintf('\n');
