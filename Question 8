@@ -1,0 +1,13 @@
+fprintf('\n===== Q8 : Grouped quantiles =====\n');
+b8 = [20 30 40 50 60 70];   f8 = [8 22 34 24 12];
+m8 = (b8(1:end-1)+b8(2:end))/2;
+n8 = sum(f8);
+meanG  = sum(f8.*m8)/n8;
+med    = groupedQuantile(b8, f8, 1/2);
+Q1     = groupedQuantile(b8, f8, 1/4);
+Q3     = groupedQuantile(b8, f8, 3/4);
+D7     = groupedQuantile(b8, f8, 7/10);
+P90    = groupedQuantile(b8, f8, 90/100);
+modeE  = 3*med - 2*meanG;
+fprintf('Mean = %.2f\nMedian = %.2f\nQ1 = %.2f\nQ3 = %.2f\nD7 = %.2f\nP90 = %.2f\n', meanG, med, Q1, Q3, D7, P90);
+fprintf('Mode (empirical) = 3*Median - 2*Mean = %.2f\n', modeE);
