@@ -1,0 +1,64 @@
+fprintf('\n===== Q15 : Regression and correlation =====\n');
+X = [2 3 5 6 8 9 11 12];          % advertising spend (Rs thousand)
+Y = [14 20 22 29 31 38 40 47];    % sales (Rs lakh)
+n15 = numel(X);
+Sx = sum(X); Sy = sum(Y); Sxy = sum(X.*Y); Sx2 = sum(X.^2); Sy2 = sum(Y.^2);
+bR = (n15*Sxy - Sx*Sy)/(n15*Sx2 - Sx^2);
+aR = (Sy - bR*Sx)/n15;
+r  = (n15*Sxy - Sx*Sy)/sqrt((n15*Sx2 - Sx^2)*(n15*Sy2 - Sy^2));
+Yhat = aR + bR*X;
+Syx  = sqrt(sum((Y-Yhat).^2)/(n15-2));
+fprintf('Sx=%d Sy=%d Sxy=%d Sx2=%d Sy2=%d\n', Sx,Sy,Sxy,Sx2,Sy2);
+fprintf('b = %.4f, a = %.4f -> Y = %.4f + %.4f X\n', bR, aR, aR, bR);
+fprintf('r = %.4f, r^2 = %.4f\n', r, r^2);
+fprintf('Standard error of estimate Sy.x = %.4f\n', Syx);
+fprintf('Predicted sales when X = 7 : %.3f\n', aR + bR*7);
+p = polyfit(X, Y, 1);  c = corrcoef(X, Y);            % cross-check with built-ins
+fprintf('Check: polyfit slope = %.4f, intercept = %.4f, corrcoef r = %.4f\n', p(1), p(2), c(1,2));
+figure('Name','Q15'); scatter(X, Y, 'filled'); hold on;
+plot(X, Yhat, 'r-'); xlabel('Advertising (Rs thousand)'); ylabel('Sales (Rs lakh)');
+title('Scatter diagram and fitted regression line'); grid on; hold off;
+
+%% =====================================================================
+%  LOCAL FUNCTIONS
+% =====================================================================
+function out = table_like(S, m, e)
+    out = [S, m, e];     % columns: 3 sample values, sample mean, sampling error
+end
+
+function v = rawQuantile(x, p)
+    % Quantile of raw data using the ((n+1)*p)-th ordered value (with interpolation)
+    x = sort(x(:)');  n = numel(x);
+    pos = p*(n+1);  lo = floor(pos);  fr = pos - lo;
+    if lo < 1
+        v = x(1);
+    elseif lo >= n
+        v = x(n);
+    else
+        v = x(lo) + fr*(x(lo+1) - x(lo));
+    end
+end
+
+function v = groupedQuantile(b, f, p)
+    % Quantile from a grouped distribution: v = l + (h/f)*(p*n - c)
+    n = sum(f);  cf = cumsum(f);  pos = p*n;
+    i = find(cf >= pos, 1, 'first');
+    if i == 1, c = 0; else, c = cf(i-1); end
+    h = b(i+1) - b(i);
+    v = b(i) + (h/f(i))*(pos - c);
+end
+
+function dispReport(name, x)
+    s = sort(x);  q1 = rawQuantile(s,.25);  q3 = rawQuantile(s,.75);
+    R = max(x) - min(x);
+    fprintf('%s: Range = %g, Coef. of dispersion = %.5f\n', name, R, R/(max(x)+min(x)));
+    fprintf('%s: Q1 = %g, Q3 = %g, Q.D. = %.2f, Coef. of Q.D. = %.5f\n', name, q1, q3, (q3-q1)/2, (q3-q1)/(q3+q1));
+end
+
+function spreadReport(name, x)
+    n = numel(x);  m = mean(x);
+    MD  = sum(abs(x - m))/n;
+    V   = sum((x - m).^2)/n;          % variance with divisor n (as in the course)
+    SD  = sqrt(V);
+    fprintf('%s: mean = %.2f, MD = %.2f, variance = %.4f, SD = %.4f, CV = %.2f %%\n', name, m, MD, V, SD, SD/m*100);
+end
