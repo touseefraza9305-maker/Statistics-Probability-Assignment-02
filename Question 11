@@ -1,0 +1,5 @@
+fprintf('\n===== Q11 : MD, SD, CV =====\n');
+sa = [52 55 49 58 54 51 57 56];
+sb = [120 135 110 150 128 140 118 145];
+spreadReport('Stock A', sa);
+spreadReport('Stock B', sb);
