@@ -1,0 +1,12 @@
+fprintf('\n===== Q3 : Qualitative data =====\n');
+names = {'Jazz','Telenor','Zong','Ufone'};
+f     = [228 156 132 84];
+pct   = f / sum(f) * 100;
+ang   = f / sum(f) * 360;
+for i = 1:numel(f)
+    fprintf('%-8s f = %3d   %% = %5.1f   angle = %6.1f deg\n', names{i}, f(i), pct(i), ang(i));
+end
+figure('Name','Q3');
+subplot(1,2,1); pie(f, names); title('Pie chart - network used');
+subplot(1,2,2); bar(f); set(gca,'XTickLabel',names);
+ylabel('Number of customers'); title('Simple bar chart');
